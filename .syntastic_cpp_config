@@ -1,0 +1,2 @@
+-I ads1115++/include/
+-I Debug/vcpkg_installed/arm64-linux/include/

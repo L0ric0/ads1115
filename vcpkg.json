@@ -1,0 +1,7 @@
+{
+    "name": "ads1115pp",
+    "version-string": "0.0.1",
+    "dependencies": [
+        "gtest"
+    ]
+}
