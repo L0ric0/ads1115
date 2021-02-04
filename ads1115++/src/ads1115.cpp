@@ -1,6 +1,7 @@
 // ADS1115
 #include "ads1115++/ads1115.hpp"
 
+#include "ads1115++/config.hpp"
 #include "ads1115++/fileno.hpp"
 #include "ads1115++/parameters.hpp"
 
@@ -16,25 +17,25 @@
 namespace ADS1115
 {
     ADS1115::ADS1115(const std::filesystem::path& fs_dev, const ADDR addr)
-        : device_(std::fstream(fs_dev)),
-          posix_handle_(fileno(device_))
+        : m_device(std::fstream(fs_dev)),
+          m_posix_handle(fileno(m_device))
     {
         setADDR(addr);
     }
 
     ADDR ADS1115::getADDR() const
     {
-        return addr_;
+        return m_addr;
     }
 
     void ADS1115::setADDR(const ADDR addr)
     {
-        addr_ = addr;
+        m_addr = addr;
 
         // For this device it seems to be impossible to check if the a ADS1115 is listening on the
         // address. This is due to the fact that ioctl returns 0 as long as a ADS1115 is connected
         // and one of the possible addresses is supplied.
-        if (ioctl(posix_handle_, I2C_SLAVE, detail::addr_map.at(addr_)) < 0) {
+        if (ioctl(m_posix_handle, I2C_SLAVE, static_cast<uint8_t>(m_addr)) < 0) {
             // FIXME turn into a device_error
             throw std::runtime_error("Couldn't find device on address!");
         }
@@ -44,101 +45,17 @@ namespace ADS1115
      * Config register getters *
      ***************************/
 
-    OS ADS1115::getRegConfigOS() const
+    ADS1115_Config ADS1115::getRegConfig() const
     {
-        return reg_config_os_;
-    }
-
-    MUX ADS1115::getRegConfigMUX() const
-    {
-        return reg_config_mux_;
-    }
-
-    PGA ADS1115::getRegConfigPGA() const
-    {
-        return reg_config_pga_;
-    }
-
-    MODE ADS1115::getRegConfigMode() const
-    {
-        return reg_config_mode_;
-    }
-
-    DR ADS1115::getRegConfigDR() const
-    {
-        return reg_config_dr_;
-    }
-
-    COMP_MODE ADS1115::getRegConfigCompMode() const
-    {
-        return reg_config_comp_mode_;
-    }
-
-    COMP_POL ADS1115::getRegConfigCompPol() const
-    {
-        return reg_config_comp_pol_;
-    }
-
-    COMP_LAT ADS1115::getRegConfigCompLat() const
-    {
-        return reg_config_comp_lat_;
-    }
-
-    COMP_QUE ADS1115::getRegConfigCompQue() const
-    {
-        return reg_config_comp_que_;
+        return m_configuration;
     }
 
     /***************************
      * Config register setters *
      ***************************/
 
-    void ADS1115::setRegConfigOS(const OS os)
+    void ADS1115::setRegConfig(const ADS1115_Config config)
     {
-        if (reg_config_mode_ != MODE::SINGLE_CONV) {
-            throw std::runtime_error(
-                "Setting the OS register is only allowed in power-down single-shot mode.");
-        }
-        reg_config_os_ = os;
-    }
-
-    void ADS1115::setRegConfigMUX(const MUX mux)
-    {
-        reg_config_mux_ = mux;
-    }
-
-    void ADS1115::setRegConfigPGA(const PGA pga)
-    {
-        reg_config_pga_ = pga;
-    }
-
-    void ADS1115::setRegConfigMode(const MODE mode)
-    {
-        reg_config_mode_ = mode;
-    }
-
-    void ADS1115::setRegConfigDR(const DR data_rate)
-    {
-        reg_config_dr_ = data_rate;
-    }
-
-    void ADS1115::setRegConfigCompMode(const COMP_MODE comp_mode)
-    {
-        reg_config_comp_mode_ = comp_mode;
-    }
-
-    void ADS1115::setRegConfigCompPol(const COMP_POL comp_pol)
-    {
-        reg_config_comp_pol_ = comp_pol;
-    }
-
-    void ADS1115::setRegConfigCompLat(const COMP_LAT comp_lat)
-    {
-        reg_config_comp_lat_ = comp_lat;
-    }
-
-    void ADS1115::setRegConfigCompQue(const COMP_QUE comp_que)
-    {
-        reg_config_comp_que_ = comp_que;
+        m_configuration = config;
     }
 } // namespace ADS1115

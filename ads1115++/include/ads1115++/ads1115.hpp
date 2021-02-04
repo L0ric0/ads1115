@@ -2,7 +2,7 @@
 #define ADS1115_ADS1115_HPP_
 
 // ADS1115
-#include "ads1115++/parameters.hpp"
+#include "ads1115++/config.hpp"
 
 // stl
 #include <filesystem>
@@ -19,48 +19,37 @@ namespace ADS1115
         ADDR getADDR() const;
         void setADDR(const ADDR addr);
 
-        /***************************
-         * Config register getters *
-         ***************************/
-
-        OS getRegConfigOS() const;
-        MUX getRegConfigMUX() const;
-        PGA getRegConfigPGA() const;
-        MODE getRegConfigMode() const;
-        DR getRegConfigDR() const;
-        COMP_MODE getRegConfigCompMode() const;
-        COMP_POL getRegConfigCompPol() const;
-        COMP_LAT getRegConfigCompLat() const;
-        COMP_QUE getRegConfigCompQue() const;
+        int16_t readRegConversion();
 
         /***************************
-         * Config register setters *
+         * Config register         *
          ***************************/
-        void setRegConfigOS(const OS os);
-        void setRegConfigMUX(const MUX mux);
-        void setRegConfigPGA(const PGA gain);
-        void setRegConfigMode(const MODE mode);
-        void setRegConfigDR(const DR data_rate);
-        void setRegConfigCompMode(const COMP_MODE comp_mode);
-        void setRegConfigCompPol(const COMP_POL comp_pol);
-        void setRegConfigCompLat(const COMP_LAT comp_lat);
-        void setRegConfigCompQue(const COMP_QUE comp_que);
+
+        void readRegConfig();
+
+        ADS1115_Config getRegConfig() const;
+        void setRegConfig(const ADS1115_Config config);
+
+        /**********************
+         * Threshold register *
+         **********************/
+
+        void readRegThreshLo();
+        void readRegThreshHi();
+
+        int16_t getRegThreshLo() const;
+        int16_t getRegThreshHi() const;
+
+        void setRegThreshLo(const int16_t low_threshold);
+        void setRegThreshHi(const int16_t high_threshold);
 
       private:
-        const std::fstream device_;
-        const int posix_handle_;
+        const std::fstream m_device;
+        const int m_posix_handle;
 
-        ADDR addr_;
+        ADDR m_addr;
 
-        OS reg_config_os_;
-        MUX reg_config_mux_ = MUX::AIN0_AIN1;
-        PGA reg_config_pga_ = PGA::FS_2_048;
-        MODE reg_config_mode_ = MODE::SINGLE_CONV;
-        DR reg_config_dr_ = DR::SPS_128;
-        COMP_MODE reg_config_comp_mode_ = COMP_MODE::TRAD_COMP;
-        COMP_POL reg_config_comp_pol_ = COMP_POL::LOW;
-        COMP_LAT reg_config_comp_lat_ = COMP_LAT::NON_LATCHING;
-        COMP_QUE reg_config_comp_que_ = COMP_QUE::DISABLE_COMP;
+        ADS1115_Config m_configuration;
     };
 
 } // namespace ADS1115
