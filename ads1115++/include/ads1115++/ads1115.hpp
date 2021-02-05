@@ -3,6 +3,7 @@
 
 // ADS1115
 #include "ads1115++/config.hpp"
+#include "ads1115++/threshold.hpp"
 
 // stl
 #include <filesystem>
@@ -13,19 +14,28 @@ namespace ADS1115
 
     class ADS1115
     {
+        const std::fstream m_device;
+        const int m_posix_handle;
+
+        ADDR m_addr;
+
+        ADS1115_Config m_config {};
+
+        Threshold m_threshold {};
+
       public:
         ADS1115(const std::filesystem::path& fs_dev, const ADDR addr);
 
         ADDR getADDR() const;
         void setADDR(const ADDR addr);
 
-        int16_t readRegConversion();
+        int16_t read() const;
 
         /***************************
          * Config register         *
          ***************************/
 
-        void readRegConfig();
+        ADS1115_Config readRegConfig();
 
         ADS1115_Config getRegConfig() const;
         void setRegConfig(const ADS1115_Config config);
@@ -34,22 +44,15 @@ namespace ADS1115
          * Threshold register *
          **********************/
 
-        void readRegThreshLo();
-        void readRegThreshHi();
+        Threshold readRegThreshold();
 
-        int16_t getRegThreshLo() const;
-        int16_t getRegThreshHi() const;
+        Threshold getRegThreshold() const;
 
-        void setRegThreshLo(const int16_t low_threshold);
-        void setRegThreshHi(const int16_t high_threshold);
+        void setRegThreshold(const Threshold threshold);
 
       private:
-        const std::fstream m_device;
-        const int m_posix_handle;
-
-        ADDR m_addr;
-
-        ADS1115_Config m_configuration;
+        uint16_t read_word(const uint8_t reg_addr) const;
+        void write_word(const uint8_t reg_addr, const uint16_t value) const;
     };
 
 } // namespace ADS1115
