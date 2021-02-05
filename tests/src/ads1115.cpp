@@ -40,6 +40,6 @@ TEST(ads1115, getRegConfig)
 TEST(ads1115, getRegThreshold)
 {
     ADS1115::ADS1115 ads("/dev/i2c-1", ADDR::GND);
-    ASSERT_EQ(ads.getRegThreshold().high, 32767);
-    ASSERT_EQ(ads.getRegThreshold().low, -32768);
+    ASSERT_EQ(ads.getRegThreshold().getHigh(), 32767);
+    ASSERT_EQ(ads.getRegThreshold().getLow(), -32768);
 }

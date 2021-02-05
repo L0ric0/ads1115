@@ -111,8 +111,8 @@ namespace ADS1115
     void ADS1115::setRegThreshold(const Threshold threshold)
     {
         m_threshold = threshold;
-        write_word(lo_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.low));
-        write_word(hi_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.high));
+        write_word(lo_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.getLow()));
+        write_word(hi_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.getHigh()));
     }
 
     uint16_t ADS1115::read_word(const uint8_t reg_addr) const

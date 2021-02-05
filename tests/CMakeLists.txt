@@ -4,6 +4,7 @@ add_executable(${BINARY} EXCLUDE_FROM_ALL
     "src/ads1115.cpp"
     "src/fileno.cpp"
     "src/config.cpp"
+    "src/threshold.cpp"
 )
 
 target_include_directories(${BINARY} PRIVATE include)
