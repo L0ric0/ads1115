@@ -7,7 +7,12 @@
 #include "ads1115++/parameters.hpp"
 
 // linux
+#include <fcntl.h>
 #include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 extern "C" {
 #include <i2c/smbus.h>
 #include <linux/i2c-dev.h>
@@ -24,10 +29,17 @@ extern "C" {
 namespace ADS1115
 {
     ADS1115::ADS1115(const std::filesystem::path& fs_dev, const ADDR addr)
-        : m_device(std::fstream(fs_dev)),
-          m_posix_handle(fileno(m_device))
+        : m_posix_handle(open(fs_dev.c_str(), O_RDWR))
     {
+        if (m_posix_handle < 0) {
+            throw std::runtime_error("Unable to open i2c device.");
+        }
         setADDR(addr);
+    }
+
+    ADS1115::~ADS1115()
+    {
+        close(m_posix_handle);
     }
 
     ADDR ADS1115::getADDR() const

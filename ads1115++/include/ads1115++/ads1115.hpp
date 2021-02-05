@@ -6,15 +6,14 @@
 #include "ads1115++/threshold.hpp"
 
 // stl
+#include <cstdio>
 #include <filesystem>
-#include <fstream>
 
 namespace ADS1115
 {
 
     class ADS1115
     {
-        const std::fstream m_device;
         const int m_posix_handle;
 
         ADDR m_addr;
@@ -25,6 +24,7 @@ namespace ADS1115
 
       public:
         ADS1115(const std::filesystem::path& fs_dev, const ADDR addr);
+        ~ADS1115();
 
         ADDR getADDR() const;
         void setADDR(const ADDR addr);
