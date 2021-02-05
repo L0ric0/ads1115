@@ -16,6 +16,8 @@ add_subdirectory(ads1115++)
 add_subdirectory(tests)
 
 ### DOCS ###
-#find_package(Doxygen)
+find_package(Doxygen OPTIONAL_COMPONENTS dot)
 
-#doxygen_add_docs(doc ALL WORKING_DIRECTORY gslcpp)
+set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md")
+
+doxygen_add_docs(doc ${CMAKE_SOURCE_DIR}/ads1115++)
