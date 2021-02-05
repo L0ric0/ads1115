@@ -3,7 +3,6 @@
 
 #include "ads1115++/bit.hpp"
 #include "ads1115++/config.hpp"
-#include "ads1115++/fileno.hpp"
 #include "ads1115++/parameters.hpp"
 
 // linux
