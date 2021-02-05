@@ -37,28 +37,9 @@ TEST(ads1115, getRegConfig)
     ASSERT_EQ(ads.getRegConfig().comp_que, COMP_QUE::DISABLE_COMP);
 }
 
-TEST(ads1115, setRegConfig)
+TEST(ads1115, getRegThreshold)
 {
     ADS1115::ADS1115 ads("/dev/i2c-1", ADDR::GND);
-    ADS1115::ADS1115_Config config {};
-
-    config.mux = MUX::AIN0_AIN3;
-    config.pga = PGA::FS_1_024;
-    config.mode = MODE::CONT_CONV;
-    config.data_rate = DR::SPS_16;
-    config.comp_mode = COMP_MODE::WINDOW_COMP;
-    config.comp_pol = COMP_POL::HIGH;
-    config.comp_lat = COMP_LAT::LATCHING;
-    config.comp_que = COMP_QUE::TWO_CONV;
-
-    ads.setRegConfig(config);
-
-    ASSERT_EQ(ads.getRegConfig().mux, MUX::AIN0_AIN3);
-    ASSERT_EQ(ads.getRegConfig().pga, PGA::FS_1_024);
-    ASSERT_EQ(ads.getRegConfig().mode, MODE::CONT_CONV);
-    ASSERT_EQ(ads.getRegConfig().data_rate, DR::SPS_16);
-    ASSERT_EQ(ads.getRegConfig().comp_mode, COMP_MODE::WINDOW_COMP);
-    ASSERT_EQ(ads.getRegConfig().comp_pol, COMP_POL::HIGH);
-    ASSERT_EQ(ads.getRegConfig().comp_lat, COMP_LAT::LATCHING);
-    ASSERT_EQ(ads.getRegConfig().comp_que, COMP_QUE::TWO_CONV);
+    ASSERT_EQ(ads.getRegThreshold().high, 32767);
+    ASSERT_EQ(ads.getRegThreshold().low, -32768);
 }
