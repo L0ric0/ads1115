@@ -7,6 +7,11 @@
 
 namespace ADS1115
 {
+    constexpr uint8_t conv_reg_addr = 0x00;
+    constexpr uint8_t conf_reg_addr = 0x01;
+    constexpr uint8_t lo_thresh_reg_addr = 0x02;
+    constexpr uint8_t hi_thresh_reg_addr = 0x03;
+
     enum class ADDR : uint8_t {
         GND = 0x48,
         VDD = 0x49,
