@@ -1,7 +1,7 @@
 // ADS1115
-#include "ads1115++/config.hpp"
+#include "ads1115/config.hpp"
 
-#include "ads1115++/parameters.hpp"
+#include "ads1115/parameters.hpp"
 
 // stl
 #include <cstdint>

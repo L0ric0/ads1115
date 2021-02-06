@@ -12,14 +12,14 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 enable_testing()
 
-project(ads1115++ VERSION 0.0.1)
+project(ads1115 VERSION 0.0.1)
 
 option(COVERAGE OFF)
 if(COVERAGE)
     include(CodeCoverage)
 endif()
 
-add_subdirectory(ads1115++)
+add_subdirectory(ads1115)
 
 ### TESTS ###
 add_subdirectory(tests)
@@ -29,4 +29,4 @@ find_package(Doxygen OPTIONAL_COMPONENTS dot)
 
 set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md")
 
-doxygen_add_docs(doc ${CMAKE_SOURCE_DIR}/ads1115++)
+doxygen_add_docs(doc ${CMAKE_SOURCE_DIR}/ads1115)

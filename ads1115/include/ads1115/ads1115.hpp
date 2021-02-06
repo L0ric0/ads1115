@@ -2,8 +2,8 @@
 #define ADS1115_ADS1115_HPP_
 
 // ADS1115
-#include "ads1115++/config.hpp"
-#include "ads1115++/threshold.hpp"
+#include "ads1115/config.hpp"
+#include "ads1115/threshold.hpp"
 
 // stl
 #include <cstdio>

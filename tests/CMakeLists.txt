@@ -11,7 +11,7 @@ target_include_directories(${BINARY} PRIVATE include)
 find_package(GTest REQUIRED)
 target_link_libraries(${BINARY} PRIVATE GTest::GTest GTest::Main)
 
-target_link_libraries(${BINARY} PRIVATE ads1115++)
+target_link_libraries(${BINARY} PRIVATE ads1115)
 
 gtest_discover_tests(${BINARY})
 

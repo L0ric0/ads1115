@@ -1,9 +1,9 @@
 // ADS1115
-#include "ads1115++/ads1115.hpp"
+#include "ads1115/ads1115.hpp"
 
-#include "ads1115++/bit.hpp"
-#include "ads1115++/config.hpp"
-#include "ads1115++/parameters.hpp"
+#include "ads1115/bit.hpp"
+#include "ads1115/config.hpp"
+#include "ads1115/parameters.hpp"
 
 // linux
 #include <fcntl.h>

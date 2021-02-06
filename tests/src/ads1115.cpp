@@ -1,8 +1,8 @@
 // ads1115
-#include "ads1115++/ads1115.hpp"
+#include "ads1115/ads1115.hpp"
 
-#include "ads1115++/config.hpp"
-#include "ads1115++/parameters.hpp"
+#include "ads1115/config.hpp"
+#include "ads1115/parameters.hpp"
 
 // gtest
 #include <gtest/gtest.h>

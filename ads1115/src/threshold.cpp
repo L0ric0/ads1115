@@ -1,7 +1,7 @@
 // ADS1115
-#include "ads1115++/threshold.hpp"
+#include "ads1115/threshold.hpp"
 
-#include "ads1115++/bit.hpp"
+#include "ads1115/bit.hpp"
 
 // stl
 #include <cstdint>

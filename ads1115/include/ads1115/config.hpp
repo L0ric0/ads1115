@@ -2,7 +2,7 @@
 #define ADS1115_OPTIONS_HPP_
 
 // ADS1115
-#include "ads1115++/parameters.hpp"
+#include "ads1115/parameters.hpp"
 
 // stl
 #include <cstdint>

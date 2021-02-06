@@ -3,7 +3,6 @@
 
 // stl
 #include <cstdint>
-#include <map>
 
 namespace ADS1115
 {

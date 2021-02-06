@@ -1,5 +1,5 @@
 // ads1115
-#include "ads1115++/threshold.hpp"
+#include "ads1115/threshold.hpp"
 
 // gtest
 #include <gtest/gtest.h>
