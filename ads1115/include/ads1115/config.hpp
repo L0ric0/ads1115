@@ -9,10 +9,10 @@
 
 namespace ADS1115
 {
-    struct ADS1115_Config {
+    struct Config {
 
-        ADS1115_Config();
-        ADS1115_Config(const uint16_t bytes);
+        Config() = default;
+        Config(const uint16_t bytes);
 
         MUX mux = MUX::AIN0_AIN1;
         PGA pga = PGA::FS_2_048;

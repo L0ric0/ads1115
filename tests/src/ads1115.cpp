@@ -25,7 +25,7 @@ TEST(ads1115, setAddr)
 TEST(ads1115, getRegConfig)
 {
     ADS1115::ADS1115 ads("/dev/i2c-1", ADDR::GND);
-    ADS1115::ADS1115_Config def_config {};
+    ADS1115::Config def_config {};
 
     ASSERT_EQ(ads.getRegConfig().mux, MUX::AIN0_AIN1);
     ASSERT_EQ(ads.getRegConfig().pga, PGA::FS_2_048);

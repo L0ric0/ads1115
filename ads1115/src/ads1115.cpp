@@ -79,20 +79,20 @@ namespace ADS1115
      * Config register *
      *******************/
 
-    ADS1115_Config ADS1115::readRegConfig()
+    Config ADS1115::readRegConfig()
     {
         const uint16_t config_word = read_word(conf_reg_addr);
-        const ADS1115_Config config(config_word);
+        const Config config(config_word);
         setRegConfig(config);
         return config;
     }
 
-    ADS1115_Config ADS1115::getRegConfig() const
+    Config ADS1115::getRegConfig() const
     {
         return m_config;
     }
 
-    void ADS1115::setRegConfig(const ADS1115_Config config)
+    void ADS1115::setRegConfig(const Config config)
     {
         m_config = config;
         write_word(conf_reg_addr, m_config.to_bytes());

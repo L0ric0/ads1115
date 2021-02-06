@@ -6,16 +6,16 @@
 // gtest
 #include <gtest/gtest.h>
 
-TEST(ads1115_Config, to_bytes)
+TEST(Config, to_bytes)
 {
-    ADS1115::ADS1115_Config config {};
+    ADS1115::Config config {};
     ASSERT_EQ(config.to_bytes(), uint16_t { 0x0583 });
 }
 
-TEST(ads1115_Config, from_bytes)
+TEST(Config, from_bytes)
 {
-    ADS1115::ADS1115_Config config(0x8583);
-    ADS1115::ADS1115_Config def_config {};
+    ADS1115::Config config(0x8583);
+    ADS1115::Config def_config {};
     ASSERT_EQ(config.mux, def_config.mux);
     ASSERT_EQ(config.pga, def_config.pga);
     ASSERT_EQ(config.mode, def_config.mode);

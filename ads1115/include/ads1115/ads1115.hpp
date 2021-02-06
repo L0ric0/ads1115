@@ -25,7 +25,7 @@ namespace ADS1115
         ADDR m_addr;
 
         //! The current configuration of the ADS1115.
-        ADS1115_Config m_config {};
+        Config m_config {};
 
         //! The current configuration of the threshold registers.
         Threshold m_threshold {};
@@ -75,24 +75,24 @@ namespace ADS1115
          * Reads the current value of the config register of the ADS1115 and updates the internal
          * object representation of the config.
          *
-         * \returns A ADS1115_Config object representing the content of the config register.
+         * \returns A Config object representing the content of the config register.
          */
-        ADS1115_Config readRegConfig();
+        Config readRegConfig();
 
         /*! Returns the currently stored configuration of the ADS1115 without hiting the chip.
          *
-         * \returns A ADS1115_Config object representing the content of the config register.
+         * \returns A Config object representing the content of the config register.
          */
-        ADS1115_Config getRegConfig() const;
+        Config getRegConfig() const;
 
         /*! Sets the configuration of the ADS1115.
          *
          * Updates the internal object representation of the configuration and writes it to the
          * config register of the ADS1115.
          *
-         * \param config A ADS1115_Config object representing the content of the config register.
+         * \param config A Config object representing the content of the config register.
          */
-        void setRegConfig(const ADS1115_Config config);
+        void setRegConfig(const Config config);
 
         /**********************
          * Threshold register *
