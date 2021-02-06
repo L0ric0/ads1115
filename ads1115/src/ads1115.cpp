@@ -57,6 +57,8 @@ namespace ADS1115
             // FIXME turn into a device_error
             throw std::runtime_error("Couldn't find device on address!");
         }
+        readRegConfig();
+        readRegThreshold();
     }
 
     int16_t ADS1115::read() const
@@ -94,8 +96,8 @@ namespace ADS1115
 
     void ADS1115::setRegConfig(const Config config)
     {
-        m_config = config;
         write_word(conf_reg_addr, m_config.to_bytes());
+        m_config = config;
     }
 
     /**********************
@@ -121,9 +123,9 @@ namespace ADS1115
 
     void ADS1115::setRegThreshold(const Threshold threshold)
     {
-        m_threshold = threshold;
         write_word(lo_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.getLow()));
         write_word(hi_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.getHigh()));
+        m_threshold = threshold;
     }
 
     uint16_t ADS1115::read_word(const uint8_t reg_addr) const
