@@ -18,8 +18,10 @@ extern "C" {
 }
 
 // stl
+#include <bit>
 #include <chrono>
 #include <cstdint>
+#include <cstdio>
 #include <filesystem>
 #include <fstream>
 #include <stdexcept>
@@ -74,7 +76,12 @@ namespace ADS1115
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
         }
-        return static_cast<int16_t>(read_word(conv_reg_addr));
+
+        uint16_t data = read_word(conv_reg_addr);
+
+        data = util::from_device_repr(data);
+
+        return util::bit_cast<int16_t, uint16_t>(data);
     }
 
     /*******************
@@ -84,8 +91,8 @@ namespace ADS1115
     Config ADS1115::readRegConfig()
     {
         const uint16_t config_word = read_word(conf_reg_addr);
-        const Config config(config_word);
-        setRegConfig(config);
+        Config config(config_word);
+        m_config = config;
         return config;
     }
 
@@ -108,10 +115,15 @@ namespace ADS1115
     {
         uint16_t low_threshold = read_word(lo_thresh_reg_addr);
         uint16_t high_threshold = read_word(hi_thresh_reg_addr);
+
+        low_threshold = util::from_device_repr(low_threshold);
+        high_threshold = util::from_device_repr(high_threshold);
+
         Threshold threshold {
-            static_cast<int16_t>(high_threshold),
-            static_cast<int16_t>(low_threshold),
+            util::bit_cast<int16_t, uint16_t>(low_threshold),
+            util::bit_cast<int16_t, uint16_t>(high_threshold),
         };
+
         m_threshold = threshold;
         return threshold;
     }
@@ -123,8 +135,11 @@ namespace ADS1115
 
     void ADS1115::setRegThreshold(const Threshold threshold)
     {
-        write_word(lo_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.getLow()));
-        write_word(hi_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.getHigh()));
+        int16_t low = util::to_device_repr(threshold.getLow());
+        int16_t high = util::to_device_repr(threshold.getHigh());
+
+        write_word(lo_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(low));
+        write_word(hi_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(high));
         m_threshold = threshold;
     }
 
