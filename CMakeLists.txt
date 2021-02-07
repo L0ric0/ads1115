@@ -29,4 +29,4 @@ find_package(Doxygen OPTIONAL_COMPONENTS dot)
 
 set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md")
 
-doxygen_add_docs(doc ${CMAKE_SOURCE_DIR}/ads1115)
+doxygen_add_docs(ads1115::doc ${CMAKE_SOURCE_DIR}/ads1115)
