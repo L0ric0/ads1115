@@ -1,4 +1,4 @@
-set(BINARY ${CMAKE_PROJECT_NAME}_test)
+set(BINARY ads1115_test)
 
 add_executable(${BINARY} EXCLUDE_FROM_ALL
     "src/ads1115.cpp"
@@ -20,7 +20,7 @@ if (COVERAGE)
         setup_target_for_coverage_gcovr_html(
             NAME ${CMAKE_PROJECT_NAME}_coverage
             EXECUTABLE ctest -j ${PROCESSOR_COUNT}
-            DEPENDENCIES ${CMAKE_PROJECT_NAME}_test
+            DEPENDENCIES ${BINARY}
             EXCLUDE ${PROJECT_SOURCE_DIR}/tests
         )
 endif()
