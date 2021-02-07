@@ -66,6 +66,10 @@ namespace ADS1115
          */
         int16_t read() const;
 
+        /*! Resets the device to it's default state.
+         */
+        void reset();
+
         /***************************
          * Config register         *
          ***************************/

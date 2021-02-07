@@ -84,6 +84,15 @@ namespace ADS1115
         return util::bit_cast<int16_t, uint16_t>(data);
     }
 
+    void ADS1115::reset()
+    {
+        Config config {};
+        setRegConfig(config);
+
+        Threshold threshold {};
+        setRegThreshold(threshold);
+    }
+
     /*******************
      * Config register *
      *******************/
