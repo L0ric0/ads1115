@@ -15,7 +15,7 @@ TEST(ads1115, create)
     ASSERT_EQ(ads.getADDR(), ADDR::GND);
 }
 
-TEST(ads1115, setAddr)
+TEST(ads1115, DISABLED_setAddr)
 {
     ADS1115::ADS1115 ads("/dev/i2c-1", ADDR::GND);
     ads.setADDR(ADDR::SDA);
