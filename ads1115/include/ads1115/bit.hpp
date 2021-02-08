@@ -29,7 +29,7 @@ namespace ADS1115::util
     template <class T>
     typename std::enable_if_t<sizeof(T) == 2, T> byte_swap(const T value)
     {
-        return ((value & 0xff) << 8) | ((value & 0xff00) >> 8);
+        return static_cast<T>(((value & 0xff) << 8) | ((value & 0xff00) >> 8));
     }
 
     template <class T>
