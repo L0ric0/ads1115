@@ -5,28 +5,38 @@ set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
-enable_testing()
 
 project(ads1115 VERSION 0.0.1)
 
-option(COVERAGE OFF)
-if(COVERAGE)
-    include(CodeCoverage)
+include(PreventInSourceBuilds)
+
+include(StandardProjectSettings)
+
+add_library(project_options INTERFACE)
+target_compile_features(project_options INTERFACE cxx_std_20)
+
+add_library(project_warnings INTERFACE)
+include(CompilerWarnings)
+set_project_warnings(project_options)
+
+include(StaticAnalyzers)
+
+include(Doxygen)
+enable_doxygen()
+
+option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
+option(ENABLE_TESTING "Enable Test Builds" OFF)
+option(ENABLE_COVERAGE "Generate coverage reports." OFF)
+option(ENABLE_FUZZING "Enable Fuzzing Builds" OFF)
+
+if(ENABLE_TESTING)
+    enable_testing()
+    message("Building Tests.")
+    if(ENABLE_COVERAGE)
+        include(CodeCoverage)
+    endif()
+    add_subdirectory(tests)
 endif()
 
 add_subdirectory(ads1115)
-
-### TESTS ###
-add_subdirectory(tests)
-
-### DOCS ###
-find_package(Doxygen OPTIONAL_COMPONENTS dot)
-
-set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md")
-
-doxygen_add_docs(ads1115::doc ${CMAKE_SOURCE_DIR}/ads1115)

@@ -1,4 +1,4 @@
-set(BINARY ads1115::test)
+set(BINARY tests)
 
 add_executable(${BINARY} EXCLUDE_FROM_ALL
     "src/ads1115.cpp"
@@ -7,6 +7,8 @@ add_executable(${BINARY} EXCLUDE_FROM_ALL
 )
 
 target_include_directories(${BINARY} PRIVATE include)
+
+target_link_libraries(${BINARY} PRIVATE project_warnings project_options)
 
 find_package(GTest REQUIRED)
 target_link_libraries(${BINARY} PRIVATE GTest::GTest GTest::Main)
