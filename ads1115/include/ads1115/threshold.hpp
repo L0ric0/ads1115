@@ -15,7 +15,7 @@ namespace ADS1115
         Threshold() = default;
         Threshold(const int16_t low, const int16_t high);
 
-        bool operator==(const Threshold& other) = default;
+        bool operator==(const Threshold& other) const = default;
 
         void set(const int16_t low, const int16_t high);
         int16_t getHigh() const;
