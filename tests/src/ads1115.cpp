@@ -25,6 +25,7 @@ TEST(ads1115, DISABLED_setAddr)
 TEST(ads1115, getRegConfig)
 {
     ADS1115::ADS1115 ads("/dev/i2c-1", ADDR::GND);
+    ads.reset();
     ADS1115::Config def_config {};
 
     ASSERT_EQ(ads.getRegConfig().mux, MUX::AIN0_AIN1);
@@ -40,6 +41,7 @@ TEST(ads1115, getRegConfig)
 TEST(ads1115, getRegThreshold)
 {
     ADS1115::ADS1115 ads("/dev/i2c-1", ADDR::GND);
+    ads.reset();
     ASSERT_EQ(ads.getRegThreshold().getHigh(), 32767);
     ASSERT_EQ(ads.getRegThreshold().getLow(), -32768);
 }
