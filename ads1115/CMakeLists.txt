@@ -1,4 +1,4 @@
-add_library(ads1115::ads1115
+add_library(ads1115
     "include/ads1115/ads1115.hpp" "src/ads1115.cpp"
     "include/ads1115/parameters.hpp"
     "include/ads1115/config.hpp" "src/config.cpp"
@@ -6,6 +6,12 @@ add_library(ads1115::ads1115
     "include/ads1115/threshold.hpp" "src/threshold.cpp"
 )
 
-target_include_directories(ads1115::ads1115 PUBLIC include)
+add_library(ads1115::ads1115 ALIAS ads1115)
 
-target_link_libraries(ads1115::ads1115 PUBLIC i2c)
+target_link_libraries(ads1115 PRIVATE project_options
+                                      project_warnings)
+
+target_include_directories(ads1115 PUBLIC include)
+
+target_link_libraries(ads1115 PUBLIC i2c)
+
