@@ -71,7 +71,7 @@ namespace ADS1115
             write_word(conf_reg_addr, m_config.to_bytes() | 0x8000);
             // when the conversion starts the ADS1115 resets the MSB and sets it when the conversion
             // is done
-            while (!(read_word(conf_reg_addr) & 0x8000)) {
+            while (!(read_word(conv_reg_addr) & 0x8000)) {
                 // poll every millisecond, as the shortest conversion the device can do takes 1.2ms
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
