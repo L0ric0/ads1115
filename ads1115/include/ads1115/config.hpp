@@ -23,7 +23,7 @@ namespace ADS1115
         COMP_LAT comp_lat = COMP_LAT::NON_LATCHING;
         COMP_QUE comp_que = COMP_QUE::DISABLE_COMP;
 
-        bool operator==(const Config& other) = default;
+        bool operator==(const Config& other) const = default;
 
         uint16_t to_bytes() const;
     };
