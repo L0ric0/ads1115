@@ -98,12 +98,12 @@ namespace ADS1115
 
     double ADS1115::toVoltage(const int16_t value) const
     {
-        return value * pga_voltage_map.at(m_config.pga) / 2e15;
+        return value * pga_voltage_map.at(m_config.pga) / 32768;
     }
 
     int16_t ADS1115::fromVoltage(const double value) const
     {
-        return static_cast<int16_t>(value * 2e15 / pga_voltage_map.at(m_config.pga));
+        return static_cast<int16_t>(value * 32768 / pga_voltage_map.at(m_config.pga));
     }
 
     /*******************
