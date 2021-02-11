@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: install dependencys
-      run: pacman -Syyu base-devel doxygen graphviz
+      run: apt update; apt install -y doxygen graphviz
 
     - uses: actions/checkout@v2
       with:

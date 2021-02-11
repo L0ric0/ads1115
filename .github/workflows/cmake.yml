@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: install dependencys
-      run: pacman -Syyu base-devel
-
     - uses: actions/checkout@v2
       with:
         submodules: recursive
