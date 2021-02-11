@@ -9,7 +9,7 @@
 
 using namespace ADS1115;
 
-TEST(ads1115, create)
+TEST(ads1115, DISABLED_create)
 {
     ADS1115::ADS1115 ads("/dev/i2c-1", ADDR::GND);
     ASSERT_EQ(ads.getADDR(), ADDR::GND);
@@ -22,7 +22,7 @@ TEST(ads1115, DISABLED_setAddr)
     ASSERT_EQ(ads.getADDR(), ADDR::SDA);
 }
 
-TEST(ads1115, getRegConfig)
+TEST(ads1115, DISABLED_getRegConfig)
 {
     ADS1115::ADS1115 ads("/dev/i2c-1", ADDR::GND);
     ads.reset();
@@ -38,7 +38,7 @@ TEST(ads1115, getRegConfig)
     ASSERT_EQ(ads.getRegConfig().comp_que, COMP_QUE::DISABLE_COMP);
 }
 
-TEST(ads1115, getRegThreshold)
+TEST(ads1115, DISABLED_getRegThreshold)
 {
     ADS1115::ADS1115 ads("/dev/i2c-1", ADDR::GND);
     ads.reset();
