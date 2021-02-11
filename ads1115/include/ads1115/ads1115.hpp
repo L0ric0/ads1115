@@ -66,9 +66,35 @@ namespace ADS1115
          */
         int16_t read() const;
 
+        /*! Read the current voltage measured by the ADS1115.
+         * If the ADS1115 is in single conversion mode a new conversion will be started an the
+         * function returns when the conversion is done.
+         *
+         * \returns The voltage value.
+         */
+        double readVoltage() const;
+
         /*! Resets the device to it's default state.
          */
         void reset();
+
+        /*! Converts a value returned by read() to a Voltage.
+         *
+         * Uses the current PGA setting for the conversion.
+         *
+         * \param value The value to be converted.
+         * \returns The voltage value of the input.
+         */
+        double toVoltage(const int16_t value) const;
+
+        /*! Converts a voltage value to a value returned by read(),
+         *
+         * Uses the current PGA setting for the conversion.
+         *
+         * \param value The value to be converted.
+         * \returns The value in the same representation as returned by read().
+         */
+        int16_t fromVoltage(const double value) const;
 
         /***************************
          * Config register         *

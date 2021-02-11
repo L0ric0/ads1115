@@ -3,6 +3,7 @@
 
 // stl
 #include <cstdint>
+#include <unordered_map>
 
 namespace ADS1115
 {
@@ -74,6 +75,10 @@ namespace ADS1115
         DISABLE_COMP = 0x0003,
     };
 
+    const static std::unordered_map<PGA, double> pga_voltage_map {
+        { PGA::FS_6_144, 6.144 }, { PGA::FS_4_096, 4.096 }, { PGA::FS_2_048, 2.048 },
+        { PGA::FS_1_024, 1.024 }, { PGA::FS_0_512, 0.512 }, { PGA::FS_0_256, 0.256 },
+    };
 } // namespace ADS1115
 
 #endif // ADS1115_PARAMETERS_HPP_

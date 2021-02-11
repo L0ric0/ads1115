@@ -82,6 +82,11 @@ namespace ADS1115
         return util::bit_cast<int16_t, uint16_t>(data);
     }
 
+    double ADS1115::readVoltage() const
+    {
+        return toVoltage(read());
+    }
+
     void ADS1115::reset()
     {
         Config config {};
@@ -89,6 +94,16 @@ namespace ADS1115
 
         Threshold threshold {};
         setRegThreshold(threshold);
+    }
+
+    double ADS1115::toVoltage(const int16_t value) const
+    {
+        return value * pga_voltage_map.at(m_config.pga) / 2e15;
+    }
+
+    int16_t ADS1115::fromVoltage(const double value) const
+    {
+        return static_cast<int16_t>(value * 2e15 / pga_voltage_map.at(m_config.pga));
     }
 
     /*******************
