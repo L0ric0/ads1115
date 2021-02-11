@@ -71,15 +71,13 @@ namespace ADS1115
             write_word(conf_reg_addr, m_config.to_bytes() | 0x8000);
             // when the conversion starts the ADS1115 resets the MSB and sets it when the conversion
             // is done
-            while (!(read_word(conv_reg_addr) & 0x8000)) {
+            while (!(read_word(conf_reg_addr) & 0x8000)) {
                 // poll every millisecond, as the shortest conversion the device can do takes 1.2ms
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
         }
 
         uint16_t data = read_word(conv_reg_addr);
-
-        data = util::from_device_repr(data);
 
         return util::bit_cast<int16_t, uint16_t>(data);
     }
@@ -125,9 +123,6 @@ namespace ADS1115
         uint16_t low_threshold = read_word(lo_thresh_reg_addr);
         uint16_t high_threshold = read_word(hi_thresh_reg_addr);
 
-        low_threshold = util::from_device_repr(low_threshold);
-        high_threshold = util::from_device_repr(high_threshold);
-
         Threshold threshold {
             util::bit_cast<int16_t, uint16_t>(low_threshold),
             util::bit_cast<int16_t, uint16_t>(high_threshold),
@@ -144,11 +139,8 @@ namespace ADS1115
 
     void ADS1115::setRegThreshold(const Threshold threshold)
     {
-        int16_t low = util::to_device_repr(threshold.getLow());
-        int16_t high = util::to_device_repr(threshold.getHigh());
-
-        write_word(lo_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(low));
-        write_word(hi_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(high));
+        write_word(lo_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.getLow()));
+        write_word(hi_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.getHigh()));
         m_threshold = threshold;
     }
 
@@ -158,12 +150,13 @@ namespace ADS1115
         if (0 > data) {
             throw std::runtime_error("Error reading value from i2c device.");
         }
-        return static_cast<uint16_t>(data);
+        return util::from_device_repr(static_cast<uint16_t>(data));
     }
 
     void ADS1115::write_word(const uint8_t reg_addr, const uint16_t value) const
     {
-        if (0 > i2c_smbus_write_word_data(m_posix_handle, reg_addr, value)) {
+        uint16_t data = util::to_device_repr(value);
+        if (0 > i2c_smbus_write_word_data(m_posix_handle, reg_addr, data)) {
             throw std::runtime_error("Error writing value to i2c device.");
         }
     }
