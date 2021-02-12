@@ -42,7 +42,7 @@ The configuration and the thresholds can also be read from the ADS1115 by callin
 
 To read from the ADS1115 the methods `int16_t ADS1115::read` and `double ADS1115::readVoltage` are provided. The `ADS1115::read` method returns the raw value of the conversion register (which is a `int16_t`) and the `ADS1115::readVoltage` returns the value of the conversion register converted to volts with respect to the current setting of the internal PGA of the ADS1115.
 
-More documentation can be found [here](githubpages).
+More documentation can be found [here](https://l0ric0.github.io/ads1115/html/index.html).
 
 ### Contributing
 
