@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['ads1115_116',['ADS1115',['../classADS1115_1_1ADS1115.html#a99f68607a54150379783b73813278ac2',1,'ADS1115::ADS1115']]]
+];
