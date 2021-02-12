@@ -6,14 +6,6 @@ function(enable_doxygen)
     set(DOXYGEN_EXTRACT_ALL YES)
     set(DOXYGEN_EXCLUDE_PATTERNS */vcpkg/* */vcpkg_installed/*)
     find_package(Doxygen REQUIRED dot)
-
-    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
-    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-
-    add_custom_target(doxygen-docs ALL
-      COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    )
+    doxygen_add_docs(doxygen-docs ${PROJECT_SOURCE_DIR})
   endif()
 endfunction()

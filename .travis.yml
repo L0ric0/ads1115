@@ -39,7 +39,7 @@ after_success:
   # Generate the docs only if master, the travis_build_docs is true and we can use secure variables
   - >-
     if [[ "$TRAVIS_BRANCH" = "master" && -n "$TRAVIS_BUILD_DOCS" && "$TRAVIS_PULL_REQUEST" = "false" ]] ; then
-      cd $PROJECT_DIR_ABS
+      cd $TRAVIS_BUILD_DIR
       source .ci/setup-ssh.sh || travis_terminate 1
 
       GH_REPO_ORG=`echo $TRAVIS_REPO_SLUG | cut -d "/" -f 1`
@@ -52,8 +52,8 @@ after_success:
       git reset --hard `git rev-list --max-parents=0 --abbrev-commit HEAD`
 
       echo 'Generating Doxygen code documentation...'
-      cmake --build ../build target doxygen-docs
-      cp -r ../html/ .
+      cmake --build ../build --target doxygen-docs
+      cp -r ../build/html/ .
 
       echo 'Uploading documentation to the gh-pages branch...'
       git add --all
