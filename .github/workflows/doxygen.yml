@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: install dependencys
-      run: apt update; apt install -y doxygen graphviz
-
     - uses: actions/checkout@v2
       with:
         submodules: recursive
@@ -37,11 +34,11 @@ jobs:
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DENABLE_DOXYGEN
 
-    - name: Build Documentation
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --build . --target doxygen-docs --config $BUILD_TYPE
+    - name: Doxygen Action
+      uses: mattnotmitt/doxygen-action@v1.2.3
+      with:
+        working-directory: ${{github.workspace}}/build
+        doxyfile-path: 'Doxygen'
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
