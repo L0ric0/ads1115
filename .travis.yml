@@ -51,9 +51,11 @@ after_success:
       git config user.email "travis@travis-ci.org"
       git reset --hard `git rev-list --max-parents=0 --abbrev-commit HEAD`
 
+      echo 'Generating Doxygen code documentation...'
       cmake --build ../build target doxygen-docs
       cp -r ../html/ .
 
+      echo 'Uploading documentation to the gh-pages branch...'
       git add --all
       git commit -m "Deploy code docs to GitHub Pages Travis build: ${TRAVIS_BUILD_NUMBER}" -m "Commit: ${TRAVIS_COMMIT}"
       git push --force "git@github.com:$GH_REPO_ORG/$GH_REPO_NAME.git" > /dev/null 2>&1
