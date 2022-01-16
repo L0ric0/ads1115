@@ -40,7 +40,30 @@ namespace ADS1115
 
     ADS1115::~ADS1115()
     {
-        close(m_posix_handle);
+        if (m_posix_handle < 0) {
+            close(m_posix_handle);
+        }
+    }
+
+    ADS1115::ADS1115(ADS1115&& other)
+        : m_posix_handle(other.m_posix_handle),
+          m_addr(other.m_addr),
+          m_config(other.m_config),
+          m_threshold(other.m_threshold)
+    {
+        other.m_posix_handle = -1;
+    }
+
+    ADS1115& ADS1115::operator=(ADS1115&& other)
+    {
+        m_posix_handle = other.m_posix_handle;
+        other.m_posix_handle = -1;
+
+        m_addr = other.m_addr;
+        m_config = std::move(other.m_config);
+        m_threshold = std::move(other.m_threshold);
+
+        return *this;
     }
 
     ADDR ADS1115::getADDR() const

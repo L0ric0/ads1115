@@ -19,7 +19,7 @@ namespace ADS1115
     class ADS1115
     {
         //! The linux filedescriptor to the i2c device in use.
-        const int m_posix_handle;
+        int m_posix_handle;
 
         //! The i2c bus address of the ADS1115.
         ADDR m_addr;
@@ -42,6 +42,12 @@ namespace ADS1115
          */
         ADS1115(const std::filesystem::path& fs_dev, const ADDR addr);
 
+        ADS1115(const ADS1115& other) = delete;
+        ADS1115(ADS1115&& other);
+
+        ADS1115& operator=(const ADS1115& other) = delete;
+        ADS1115& operator=(ADS1115&& other);
+
         //! Destroys the object that represents the ADS1115.
         ~ADS1115();
 
@@ -59,7 +65,7 @@ namespace ADS1115
         void setADDR(const ADDR addr);
 
         /*! Read the current value of the conversion register of the ADS1115.
-         * If the ADS1115 is in single conversion mode a new conversion will be started an the
+         * If the ADS1115 is in single conversion mode a new conversion will be started and the
          * function returns when the conversion is done.
          *
          * \returns The value of the conversion register.
@@ -67,7 +73,7 @@ namespace ADS1115
         int16_t read() const;
 
         /*! Read the current voltage measured by the ADS1115.
-         * If the ADS1115 is in single conversion mode a new conversion will be started an the
+         * If the ADS1115 is in single conversion mode a new conversion will be started and the
          * function returns when the conversion is done.
          *
          * \returns The voltage value.
