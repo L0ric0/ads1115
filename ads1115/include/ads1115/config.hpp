@@ -3,13 +3,14 @@
 
 // ADS1115
 #include "ads1115/parameters.hpp"
+#include "ads1115/detail/ads1115_export.h"
 
 // stl
 #include <cstdint>
 
 namespace ADS1115
 {
-    struct Config {
+    struct ADS1115_EXPORT Config {
 
         Config() = default;
         Config(const uint16_t bytes);
