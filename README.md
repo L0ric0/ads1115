@@ -18,7 +18,7 @@ Create a `ADS1115` object with the path to the i2c device and a enum describing 
 #include "ads1115/parameters.hpp"
 
 int main(){
-  ADS1115::ADS1115 ads{"/dev/i2c-1",
+  ADS1115::ADS1115 ads{1,
                        ADS1115::ADDR::GND /* or static_cast<ADS1115::ADDR>(0x48)*/ };
 }
 ```
@@ -26,14 +26,14 @@ int main(){
 To configure the ADS1115 create a `Config` object. This object is initialized with the default settings of the ADS1115.
 
 ```cpp
-ADS1115::ADS1115 ads{"/dev/i2c-1", ADS1115::ADDR::GND};
+ADS1115::ADS1115 ads{1, ADS1115::ADDR::GND};
 ADS1115::Config conf{};
 ads.setRegConfig(conf);
 ```
 
 In the same way the comparator thresholds can be set by creating a `Threshold` object. The default constructor will initialize the high an low thresholds with the defaults.
 ```cpp
-ADS1115::ADS1115 ads{"/dev/i2c-1", ADS1115::ADDR::GND};
+ADS1115::ADS1115 ads{1, ADS1115::ADDR::GND};
 ADS1115::Threshold thresh{-16, 16};
 ads.setRegThreshold(thresh);
 ```
