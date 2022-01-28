@@ -1,12 +1,15 @@
 #ifndef ADS1115_THRESHOLD_HPP_
 #define ADS1115_THRESHOLD_HPP_
 
+//ads1115
+#include "ads1115/detail/ads1115_export.h"
+
 // stl
 #include <cstdint>
 
 namespace ADS1115
 {
-    class Threshold
+    class ADS1115_EXPORT Threshold
     {
         int16_t m_high = 32767;
         int16_t m_low = -32768;

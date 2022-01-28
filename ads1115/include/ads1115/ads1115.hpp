@@ -4,6 +4,7 @@
 // ADS1115
 #include "ads1115/config.hpp"
 #include "ads1115/threshold.hpp"
+#include "ads1115/detail/ads1115_export.h"
 
 // stl
 #include <cstdio>
@@ -16,7 +17,7 @@ namespace ADS1115
      * The data sheet of the ADS1115 can be fond at
      * https://cdn-shop.adafruit.com/datasheets/ads1115.pdf.
      */
-    class ADS1115
+    class ADS1115_EXPORT ADS1115
     {
         //! The linux filedescriptor to the i2c device in use.
         int m_posix_handle;
