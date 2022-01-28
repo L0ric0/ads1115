@@ -13,6 +13,7 @@ jobs:
       env:
         - TRAVIS_BUILD_DOCS=1
         - MATRIX_EVAL="CC=gcc-10 && CXX=g++-10"
+        - VCPKG_FEATURE_FLAGS=registries
       addons:
         apt:
           sources:
