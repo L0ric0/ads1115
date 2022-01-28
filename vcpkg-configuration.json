@@ -1,0 +1,14 @@
+{
+	"default-registry": {
+		"kind": "builtin",
+		"baseline": "3afbc7b286c1cf4717f20753a0a4d15b9ab4d342"
+	},
+	"registries": [
+      {
+		"kind": "git",
+		"repository": "https://github.com/L0ric0/vcpkg-registry",
+		"baseline": "eba1754082c37d46662aba77a69b3f3cd943614e",
+		"packages": ["i2c-device", "ads1115"]
+	  }
+	]
+}
