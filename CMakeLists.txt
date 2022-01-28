@@ -35,6 +35,7 @@ option(ENABLE_COVERAGE "Generate coverage reports." OFF)
 option(ENABLE_FUZZING "Enable Fuzzing Builds" OFF)
 
 if(ENABLE_TESTING)
+    message(STATUS ">>> Testing enabled.")
     enable_testing()
     message("Building Tests.")
     if(ENABLE_COVERAGE)

@@ -8,6 +8,10 @@ add_executable(${BINARY} EXCLUDE_FROM_ALL
 
 target_include_directories(${BINARY} PRIVATE include)
 
+target_include_directories(${BINARY} PRIVATE
+    "${CMAKE_BINARY_DIR}/ads1115"
+)
+
 target_link_libraries(${BINARY} PRIVATE project_warnings project_options)
 
 find_package(GTest REQUIRED)
