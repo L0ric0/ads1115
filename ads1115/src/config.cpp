@@ -8,7 +8,7 @@
 
 namespace ADS1115
 {
-    Config::Config(const uint16_t bytes)
+    Config::Config(const std::uint16_t bytes)
         : mux(static_cast<MUX>(0x7000 & bytes)),
           pga(static_cast<PGA>(0x0e00 & bytes)),
           mode(static_cast<MODE>(0x0100 & bytes)),
@@ -20,11 +20,11 @@ namespace ADS1115
     {
     }
 
-    uint16_t Config::to_bytes() const
+    std::uint16_t Config::to_bytes() const
     {
-        return static_cast<uint16_t>(mux) | static_cast<uint16_t>(pga) | static_cast<uint16_t>(mode)
-               | static_cast<uint16_t>(data_rate) | static_cast<uint16_t>(comp_mode)
-               | static_cast<uint16_t>(comp_pol) | static_cast<uint16_t>(comp_lat)
-               | static_cast<uint16_t>(comp_que);
+        return static_cast<std::uint16_t>(mux) | static_cast<std::uint16_t>(pga) | static_cast<std::uint16_t>(mode)
+               | static_cast<std::uint16_t>(data_rate) | static_cast<std::uint16_t>(comp_mode)
+               | static_cast<std::uint16_t>(comp_pol) | static_cast<std::uint16_t>(comp_lat)
+               | static_cast<std::uint16_t>(comp_que);
     }
 } // namespace ADS1115
