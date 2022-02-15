@@ -1,9 +1,8 @@
 // ADS1115
 #include "ads1115/threshold.hpp"
 
-#include "ads1115/bit.hpp"
-
 // stl
+#include <bit>
 #include <cstdint>
 #include <stdexcept>
 
@@ -16,8 +15,8 @@ namespace ADS1115
 
     void Threshold::set(const int16_t low, const int16_t high)
     {
-        if ((util::bit_cast<uint16_t, int16_t>(high) & 0x8000)
-            and !(util::bit_cast<uint16_t, int16_t>(low) & 0x8000)) {
+        if ((std::bit_cast<uint16_t>(high) & 0x8000)
+            and !(std::bit_cast<uint16_t>(low) & 0x8000)) {
             m_high = high;
             m_low = low;
             return;

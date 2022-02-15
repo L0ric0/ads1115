@@ -2,7 +2,6 @@ set(ADS1115_HEADER
     "ads1115/include/ads1115/ads1115.hpp"
     "ads1115/include/ads1115/parameters.hpp"
     "ads1115/include/ads1115/config.hpp"
-    "ads1115/include/ads1115/bit.hpp"
     "ads1115/include/ads1115/threshold.hpp"
 )
 
@@ -16,7 +15,6 @@ add_library(ads1115 ${LIB_LINKAGE}
     "include/ads1115/ads1115.hpp"    "src/ads1115.cpp"
     "include/ads1115/parameters.hpp"
     "include/ads1115/config.hpp"     "src/config.cpp"
-    "include/ads1115/bit.hpp"
     "include/ads1115/threshold.hpp"  "src/threshold.cpp"
 )
 
