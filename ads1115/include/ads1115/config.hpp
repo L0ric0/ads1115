@@ -13,7 +13,7 @@ namespace ADS1115
     struct ADS1115_EXPORT Config {
 
         Config() = default;
-        Config(const uint16_t bytes);
+        Config(const std::uint16_t bytes);
 
         MUX mux = MUX::AIN0_AIN1;
         PGA pga = PGA::FS_2_048;
@@ -26,7 +26,7 @@ namespace ADS1115
 
         bool operator==(const Config& other) const = default;
 
-        uint16_t to_bytes() const;
+        std::uint16_t to_bytes() const;
     };
 } // namespace ADS1115
 

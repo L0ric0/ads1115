@@ -8,15 +8,15 @@
 
 namespace ADS1115
 {
-    Threshold::Threshold(const int16_t low, const int16_t high)
+    Threshold::Threshold(const std::int16_t low, const std::int16_t high)
     {
         set(low, high);
     }
 
-    void Threshold::set(const int16_t low, const int16_t high)
+    void Threshold::set(const std::int16_t low, const std::int16_t high)
     {
-        if ((std::bit_cast<uint16_t>(high) & 0x8000)
-            and !(std::bit_cast<uint16_t>(low) & 0x8000)) {
+        if ((std::bit_cast<std::uint16_t>(high) & 0x8000)
+            and !(std::bit_cast<std::uint16_t>(low) & 0x8000)) {
             m_high = high;
             m_low = low;
             return;
@@ -28,11 +28,11 @@ namespace ADS1115
         m_low = low;
     }
 
-    int16_t Threshold::getHigh() const
+    std::int16_t Threshold::getHigh() const
     {
         return m_high;
     }
-    int16_t Threshold::getLow() const
+    std::int16_t Threshold::getLow() const
     {
         return m_low;
     }

@@ -67,7 +67,7 @@ namespace ADS1115
          *
          * \returns The value of the conversion register.
          */
-        int16_t read() const;
+        std::int16_t read() const;
 
         /*! Read the current voltage measured by the ADS1115.
          * If the ADS1115 is in single conversion mode a new conversion will be started and the
@@ -88,7 +88,7 @@ namespace ADS1115
          * \param value The value to be converted.
          * \returns The voltage value of the input.
          */
-        double toVoltage(const int16_t value) const;
+        double toVoltage(const std::int16_t value) const;
 
         /*! Converts a voltage value to a value returned by read(),
          *
@@ -97,7 +97,7 @@ namespace ADS1115
          * \param value The value to be converted.
          * \returns The value in the same representation as returned by read().
          */
-        int16_t fromVoltage(const double value) const;
+        std::int16_t fromVoltage(const double value) const;
 
         /***************************
          * Config register         *
