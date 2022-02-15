@@ -7,23 +7,23 @@
 
 namespace ADS1115
 {
-    constexpr uint8_t conv_reg_addr = 0x00;
-    constexpr uint8_t conf_reg_addr = 0x01;
-    constexpr uint8_t lo_thresh_reg_addr = 0x02;
-    constexpr uint8_t hi_thresh_reg_addr = 0x03;
+    constexpr std::uint8_t conv_reg_addr = 0x00;
+    constexpr std::uint8_t conf_reg_addr = 0x01;
+    constexpr std::uint8_t lo_thresh_reg_addr = 0x02;
+    constexpr std::uint8_t hi_thresh_reg_addr = 0x03;
 
-    enum class ADDR : uint8_t {
+    enum class ADDR : std::uint8_t {
         GND = 0x48,
         VDD = 0x49,
         SDA = 0x4a,
         SCL = 0x4b,
     };
 
-    enum class OS : uint16_t {
+    enum class OS : std::uint16_t {
         NON = 0x0000,
         SINGLE_CONV = 0x8000,
     };
-    enum class MUX : uint16_t {
+    enum class MUX : std::uint16_t {
         AIN0_AIN1 = 0x0000,
         AIN0_AIN3 = 0x1000,
         AIN1_AIN3 = 0x2000,
@@ -33,7 +33,7 @@ namespace ADS1115
         AIN2_GND = 0x6000,
         AIN3_GND = 0x7000,
     };
-    enum class PGA : uint16_t {
+    enum class PGA : std::uint16_t {
         FS_6_144 = 0x0000,
         FS_4_096 = 0x0200,
         FS_2_048 = 0x0400,
@@ -41,12 +41,12 @@ namespace ADS1115
         FS_0_512 = 0x0800,
         FS_0_256 = 0x0a00,
     };
-    enum class MODE : uint16_t {
+    enum class MODE : std::uint16_t {
         CONT_CONV = 0x0000,
         SINGLE_CONV = 0x0100,
     };
 
-    enum class DR : uint16_t {
+    enum class DR : std::uint16_t {
         SPS_8 = 0x0000,
         SPS_16 = 0x0020,
         SPS_32 = 0x0040,
@@ -56,19 +56,19 @@ namespace ADS1115
         SPS_475 = 0x00c0,
         SPS_860 = 0x00e0,
     };
-    enum class COMP_MODE : uint16_t {
+    enum class COMP_MODE : std::uint16_t {
         TRAD_COMP = 0x0000,
         WINDOW_COMP = 0x0010,
     };
-    enum class COMP_POL : uint16_t {
+    enum class COMP_POL : std::uint16_t {
         LOW = 0x0000,
         HIGH = 0x0008,
     };
-    enum class COMP_LAT : uint16_t {
+    enum class COMP_LAT : std::uint16_t {
         NON_LATCHING = 0x0000,
         LATCHING = 0x0004,
     };
-    enum class COMP_QUE : uint16_t {
+    enum class COMP_QUE : std::uint16_t {
         ONE_CONV = 0x0000,
         TWO_CONV = 0x0001,
         FOUR_CONV = 0x0002,
