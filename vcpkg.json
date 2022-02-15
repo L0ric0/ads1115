@@ -2,6 +2,10 @@
     "name": "ads1115",
     "version-string": "0.0.1",
     "dependencies": [
+        {
+            "name": "i2c-device",
+            "version>=":  "0.0.9"
+        },
         "gtest"
     ]
 }

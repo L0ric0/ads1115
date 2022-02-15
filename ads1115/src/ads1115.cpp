@@ -5,17 +5,9 @@
 #include "ads1115/config.hpp"
 #include "ads1115/parameters.hpp"
 
-// linux
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-extern "C" {
-#include <i2c/smbus.h>
-#include <linux/i2c-dev.h>
-}
+// i2c-device
+#include "i2c-device/device.hpp"
+#include "i2c-device/util.hpp"
 
 // stl
 #include <bit>
@@ -29,37 +21,24 @@ extern "C" {
 
 namespace ADS1115
 {
-    ADS1115::ADS1115(const std::filesystem::path& fs_dev, const ADDR addr)
-        : m_posix_handle(open(fs_dev.c_str(), O_RDWR))
+    ADS1115::ADS1115(const int adapter_nr, const ADDR addr)
+        : m_device(i2c::AdapterNumber(adapter_nr), i2c::DeviceID(static_cast<int>(addr))),
+          m_addr(addr)
     {
-        if (m_posix_handle < 0) {
-            throw std::runtime_error("Unable to open i2c device.");
-        }
-        setADDR(addr);
     }
 
-    ADS1115::~ADS1115()
-    {
-        if (m_posix_handle < 0) {
-            close(m_posix_handle);
-        }
-    }
-
-    ADS1115::ADS1115(ADS1115&& other)
-        : m_posix_handle(other.m_posix_handle),
+    ADS1115::ADS1115(ADS1115&& other) noexcept
+        : m_device(std::move(other.m_device)),
           m_addr(other.m_addr),
           m_config(other.m_config),
           m_threshold(other.m_threshold)
     {
-        other.m_posix_handle = -1;
     }
 
-    ADS1115& ADS1115::operator=(ADS1115&& other)
+    ADS1115& ADS1115::operator=(ADS1115&& other) noexcept
     {
-        m_posix_handle = other.m_posix_handle;
-        other.m_posix_handle = -1;
-
-        m_addr = other.m_addr;
+        m_device = std::move(other.m_device);
+        m_addr = std::move(other.m_addr);
         m_config = std::move(other.m_config);
         m_threshold = std::move(other.m_threshold);
 
@@ -71,38 +50,23 @@ namespace ADS1115
         return m_addr;
     }
 
-    void ADS1115::setADDR(const ADDR addr)
-    {
-        m_addr = addr;
-
-        // For this device it seems to be impossible to check if the a ADS1115 is listening on the
-        // address. This is due to the fact that ioctl returns 0 as long as a ADS1115 is connected
-        // and one of the possible addresses is supplied.
-        if (ioctl(m_posix_handle, I2C_SLAVE, static_cast<uint8_t>(m_addr)) < 0) {
-            // FIXME turn into a device_error
-            throw std::runtime_error("Couldn't find device on address!");
-        }
-        readRegConfig();
-        readRegThreshold();
-    }
-
     int16_t ADS1115::read() const
     {
         if (m_config.mode == MODE::SINGLE_CONV) {
             // to start a conversion in single conversion mode the MSB of the config
             // register has to be set
-            write_word(conf_reg_addr, m_config.to_bytes() | 0x8000);
+            m_device.write_word_data(conf_reg_addr, m_config.to_bytes() | 0x8000);
             // when the conversion starts the ADS1115 resets the MSB and sets it when the conversion
             // is done
-            while (!(read_word(conf_reg_addr) & 0x8000)) {
+            while (!(m_device.read_word_data(conf_reg_addr) & 0x8000)) {
                 // poll every millisecond, as the shortest conversion the device can do takes 1.2ms
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
         }
 
-        uint16_t data = read_word(conv_reg_addr);
+        uint16_t data = m_device.read_word_data(conv_reg_addr);
 
-        return util::bit_cast<int16_t, uint16_t>(data);
+        return std::bit_cast<int16_t>(data);
     }
 
     double ADS1115::readVoltage() const
@@ -135,7 +99,7 @@ namespace ADS1115
 
     Config ADS1115::readRegConfig()
     {
-        const uint16_t config_word = read_word(conf_reg_addr);
+        const uint16_t config_word = m_device.read_word_data(conf_reg_addr);
         Config config(config_word);
         m_config = config;
         return config;
@@ -148,7 +112,7 @@ namespace ADS1115
 
     void ADS1115::setRegConfig(const Config config)
     {
-        write_word(conf_reg_addr, m_config.to_bytes());
+        m_device.write_word_data(conf_reg_addr, m_config.to_bytes());
         m_config = config;
     }
 
@@ -158,12 +122,12 @@ namespace ADS1115
 
     Threshold ADS1115::readRegThreshold()
     {
-        uint16_t low_threshold = read_word(lo_thresh_reg_addr);
-        uint16_t high_threshold = read_word(hi_thresh_reg_addr);
+        uint16_t low_threshold = m_device.read_word_data(lo_thresh_reg_addr);
+        uint16_t high_threshold = m_device.read_word_data(hi_thresh_reg_addr);
 
         Threshold threshold {
-            util::bit_cast<int16_t, uint16_t>(low_threshold),
-            util::bit_cast<int16_t, uint16_t>(high_threshold),
+            std::bit_cast<int16_t>(low_threshold),
+            std::bit_cast<int16_t>(high_threshold),
         };
 
         m_threshold = threshold;
@@ -177,25 +141,9 @@ namespace ADS1115
 
     void ADS1115::setRegThreshold(const Threshold threshold)
     {
-        write_word(lo_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.getLow()));
-        write_word(hi_thresh_reg_addr, util::bit_cast<uint16_t, int16_t>(threshold.getHigh()));
+        m_device.write_word_data(lo_thresh_reg_addr, std::bit_cast<uint16_t>(threshold.getLow()));
+        m_device.write_word_data(hi_thresh_reg_addr, std::bit_cast<uint16_t>(threshold.getHigh()));
         m_threshold = threshold;
     }
 
-    uint16_t ADS1115::read_word(const uint8_t reg_addr) const
-    {
-        int32_t data = i2c_smbus_read_word_data(m_posix_handle, reg_addr);
-        if (0 > data) {
-            throw std::runtime_error("Error reading value from i2c device.");
-        }
-        return util::from_device_repr(static_cast<uint16_t>(data));
-    }
-
-    void ADS1115::write_word(const uint8_t reg_addr, const uint16_t value) const
-    {
-        uint16_t data = util::to_device_repr(value);
-        if (0 > i2c_smbus_write_word_data(m_posix_handle, reg_addr, data)) {
-            throw std::runtime_error("Error writing value to i2c device.");
-        }
-    }
 } // namespace ADS1115

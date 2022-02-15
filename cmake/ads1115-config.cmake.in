@@ -8,5 +8,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/ads1115-targets.cmake)
 set(ADS1115_LIBRARY ads1115::ads1115)
 set(ADS1115_LIBRARYS ads1115::ads1115)
 
+find_package(i2c-device CONFIG REQUIRED)
+
 check_required_components(ads1115)
 set(ADS1115_FOUND 1)

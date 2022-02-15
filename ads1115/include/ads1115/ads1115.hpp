@@ -6,6 +6,9 @@
 #include "ads1115/threshold.hpp"
 #include "ads1115/detail/ads1115_export.h"
 
+// i2c-device
+#include "i2c-device/device.hpp"
+
 // stl
 #include <cstdio>
 #include <filesystem>
@@ -20,7 +23,7 @@ namespace ADS1115
     class ADS1115_EXPORT ADS1115
     {
         //! The linux filedescriptor to the i2c device in use.
-        int m_posix_handle;
+        i2c::i2c_device<> m_device;
 
         //! The i2c bus address of the ADS1115.
         ADDR m_addr;
@@ -41,29 +44,22 @@ namespace ADS1115
          * \param fs_dev std::filesystem::path to the i2c bus device file.
          * \param addr Address of the ADS1115 on the i2c bus.
          */
-        ADS1115(const std::filesystem::path& fs_dev, const ADDR addr);
+        ADS1115(const int adapter_nr, const ADDR addr);
 
         ADS1115(const ADS1115& other) = delete;
-        ADS1115(ADS1115&& other);
+        ADS1115(ADS1115&& other) noexcept;
 
         ADS1115& operator=(const ADS1115& other) = delete;
-        ADS1115& operator=(ADS1115&& other);
+        ADS1115& operator=(ADS1115&& other) noexcept;
 
         //! Destroys the object that represents the ADS1115.
-        ~ADS1115();
+        ~ADS1115() = default;
 
         /*! Returns the address of the ADS1115 that is currently used.
          *
          * \returns ADDR that represents the currently used address.
          */
         ADDR getADDR() const;
-
-        /*! Sets the address of the ADS1115 to be used.
-         * After setting the new address it loads the config register of the ADS1115 and stores it.
-         *
-         * \param addr The address of the ADS1115 to be used.
-         */
-        void setADDR(const ADDR addr);
 
         /*! Read the current value of the conversion register of the ADS1115.
          * If the ADS1115 is in single conversion mode a new conversion will be started and the
@@ -159,20 +155,6 @@ namespace ADS1115
          * \param threshold A Threshold object representing the contents of the threshold registers.
          */
         void setRegThreshold(const Threshold threshold);
-
-      private:
-        /*! Read a 16 bit value from a register.
-         *
-         * \param reg_addr The address of the register to be read.
-         */
-        uint16_t read_word(const uint8_t reg_addr) const;
-
-        /*! Write a 16 bit value to a register.
-         *
-         * \param reg_addr The address of the register to be written.
-         * \param value The 16 bit value to be written.
-         */
-        void write_word(const uint8_t reg_addr, const uint16_t value) const;
     };
 
 } // namespace ADS1115

@@ -44,5 +44,6 @@ target_include_directories(ads1115 PRIVATE
     $<INSTALL_INTERFACE:include/> #<prefix>/include
 )
 
-target_link_libraries(ads1115 PUBLIC i2c)
+find_package(i2c-device CONFIG REQUIRED)
+target_link_libraries(ads1115 PRIVATE i2c::i2c-device)
 
