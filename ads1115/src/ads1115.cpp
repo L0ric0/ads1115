@@ -15,6 +15,7 @@
 #include <cstdio>
 #include <filesystem>
 #include <fstream>
+#include <limits>
 #include <stdexcept>
 #include <thread>
 
@@ -84,12 +85,13 @@ namespace ADS1115
 
     double ADS1115::toVoltage(const std::int16_t value) const
     {
-        return value * pga_voltage_map.at(m_config.pga) / 32768;
+        return value * pga_voltage_map.at(m_config.pga) / std::numeric_limits<std::int16_t>::max();
     }
 
     std::int16_t ADS1115::fromVoltage(const double value) const
     {
-        return static_cast<std::int16_t>(value * 32768 / pga_voltage_map.at(m_config.pga));
+        return static_cast<std::int16_t>(
+            value * std::numeric_limits<std::int16_t>::max() / pga_voltage_map.at(m_config.pga));
     }
 
     /*******************
@@ -140,8 +142,12 @@ namespace ADS1115
 
     void ADS1115::setRegThreshold(const Threshold threshold)
     {
-        m_device.write_word_data(lo_thresh_reg_addr, std::bit_cast<std::uint16_t>(threshold.getLow()));
-        m_device.write_word_data(hi_thresh_reg_addr, std::bit_cast<std::uint16_t>(threshold.getHigh()));
+        m_device.write_word_data(
+            lo_thresh_reg_addr,
+            std::bit_cast<std::uint16_t>(threshold.getLow()));
+        m_device.write_word_data(
+            hi_thresh_reg_addr,
+            std::bit_cast<std::uint16_t>(threshold.getHigh()));
         m_threshold = threshold;
     }
 
