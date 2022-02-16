@@ -1,0 +1,25 @@
+var classADS1115_1_1ADS1115 =
+[
+    [ "ADS1115", "classADS1115_1_1ADS1115.html#a2c2c5a35a7144be855665129f4f4040d", null ],
+    [ "ADS1115", "classADS1115_1_1ADS1115.html#ad11b7a76a022bb81e4e301e06834a62c", null ],
+    [ "ADS1115", "classADS1115_1_1ADS1115.html#a71a8058e7bd72b104a0df56de6c77009", null ],
+    [ "~ADS1115", "classADS1115_1_1ADS1115.html#a7652a40baaca3c4179a898a51252fecb", null ],
+    [ "fromVoltage", "classADS1115_1_1ADS1115.html#ab7e5644da9c881cea6fd7c934e18c263", null ],
+    [ "getADDR", "classADS1115_1_1ADS1115.html#afd7aafddc15950ede393f1c77b2cbea4", null ],
+    [ "getRegConfig", "classADS1115_1_1ADS1115.html#af83a3f796448f1aad41ae2b2c6adde3a", null ],
+    [ "getRegThreshold", "classADS1115_1_1ADS1115.html#ade7fe421072797d32b54a33dce8c2ade", null ],
+    [ "operator=", "classADS1115_1_1ADS1115.html#a00405243b293e7ad58fa792a511c0254", null ],
+    [ "operator=", "classADS1115_1_1ADS1115.html#a73d171d730c9580896d2e2a5f06a63c3", null ],
+    [ "read", "classADS1115_1_1ADS1115.html#a01a818a8d9f8e95429fcf7791a656003", null ],
+    [ "readRegConfig", "classADS1115_1_1ADS1115.html#a038ae326e2ec19165630a356b6befe61", null ],
+    [ "readRegThreshold", "classADS1115_1_1ADS1115.html#aa2c2163d4d56a6609c275786b3f5440f", null ],
+    [ "readVoltage", "classADS1115_1_1ADS1115.html#a917e603882d267f569e722ebe6ed35b8", null ],
+    [ "reset", "classADS1115_1_1ADS1115.html#aca4fd1daadd7bfb9d044fb330b954cfc", null ],
+    [ "setRegConfig", "classADS1115_1_1ADS1115.html#a2974640538b3b47edc26784edede5f08", null ],
+    [ "setRegThreshold", "classADS1115_1_1ADS1115.html#ac4aa65acbf5531c4028d5d4ab7f7eb0a", null ],
+    [ "toVoltage", "classADS1115_1_1ADS1115.html#ae67cae545c92ddb3185cc599990238a5", null ],
+    [ "m_addr", "classADS1115_1_1ADS1115.html#a25efa9f1642bd40426efe074f76480d2", null ],
+    [ "m_config", "classADS1115_1_1ADS1115.html#a43bcf24df5189676b14fb27820d412ff", null ],
+    [ "m_device", "classADS1115_1_1ADS1115.html#a163164381730330b70963a41a6fb42a1", null ],
+    [ "m_threshold", "classADS1115_1_1ADS1115.html#abe53cbbd6ae5e6f6064039a921953925", null ]
+];
