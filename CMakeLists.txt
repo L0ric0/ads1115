@@ -9,7 +9,7 @@ endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-project(ads1115 VERSION 0.0.1)
+project(ads1115 VERSION 0.2.0)
 
 include(GNUInstallDirs)
 include(CheckIncludeFiles)

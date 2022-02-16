@@ -1,6 +1,6 @@
 {
     "name": "ads1115",
-    "version-string": "0.0.1",
+    "version-string": "0.2.0",
     "dependencies": [
         {
             "name": "i2c-device",
