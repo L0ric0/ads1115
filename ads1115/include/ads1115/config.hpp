@@ -2,14 +2,21 @@
 #define ADS1115_OPTIONS_HPP_
 
 // ADS1115
-#include "ads1115/parameters.hpp"
 #include "ads1115/detail/ads1115_export.h"
+#include "ads1115/parameters.hpp"
 
 // stl
 #include <cstdint>
 
 namespace ADS1115
 {
+    /*! The Config struct represents the config register of the ADS1115.
+     *
+     * The config register of the ADS1115 is consists of 16 bit which configure the device. The
+     * members of this struct map to the configuration options described in the datasheet and can
+     * span more than one bit. A `to_bytes()` member function is provided to convert the struct to a
+     * `std::uint16_t` which can be writen to the config register of the ADS1115.
+     */
     struct ADS1115_EXPORT Config {
 
         Config() = default;
@@ -26,6 +33,9 @@ namespace ADS1115
 
         bool operator==(const Config& other) const = default;
 
+        /*! Converts the struct to a `std::uint16_t` which can be writen to the config register of
+         * the ADS1115.
+         */
         std::uint16_t to_bytes() const;
     };
 } // namespace ADS1115

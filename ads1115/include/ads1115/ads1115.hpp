@@ -3,8 +3,8 @@
 
 // ADS1115
 #include "ads1115/config.hpp"
-#include "ads1115/threshold.hpp"
 #include "ads1115/detail/ads1115_export.h"
+#include "ads1115/threshold.hpp"
 
 // i2c-device
 #include "i2c-device/device.hpp"
@@ -22,7 +22,7 @@ namespace ADS1115
      */
     class ADS1115_EXPORT ADS1115
     {
-        //! The linux filedescriptor to the i2c device in use.
+        //! The generic i2c device in use.
         i2c::i2c_device<> m_device;
 
         //! The i2c bus address of the ADS1115.
